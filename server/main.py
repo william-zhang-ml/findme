@@ -18,11 +18,27 @@ from . import serverutils
 app = FastAPI()
 
 
+# Poor man's user "database"
+USER_DATA = {
+    'total_score': 0
+}
+
+
 class RawImage(BaseModel):
     """Expected image format to receive from client devices. """
     mode: str              # ex: RGB
     size: Tuple[int, int]  # width x height
     data: str
+
+
+@app.get('/user/')
+async def get_user_data() -> Dict:
+    """Get user data for mobile client display.
+
+    Returns:
+        Dict: user data
+    """
+    return USER_DATA
 
 
 @app.post('/score/')
