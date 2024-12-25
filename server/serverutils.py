@@ -4,6 +4,7 @@ Server utilities for number crunching.
 __author__ = 'William Zhang'
 
 from pathlib import Path
+import random
 from typing import List
 import numpy as np
 import onnxruntime as ort
@@ -51,6 +52,17 @@ class OnnxEngine:
 
 # Inference engine used for scoring
 ENGINE = OnnxEngine(CURR_DIR / 'resnet18.onnx')
+
+
+def name_random() -> str:
+    """Name a random object category.
+
+    Returns:
+        str: object category
+    """
+    high = len(CATEGORIES)
+    idx = random.randint(0, high - 1)
+    return CATEGORIES[idx]
 
 
 def score_image(img: np.ndarray, label: int = 0) -> int:
