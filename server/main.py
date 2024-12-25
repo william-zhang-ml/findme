@@ -40,8 +40,9 @@ async def score(raw: RawImage) -> Dict[str, int]:
     # preprocess image for inference engine
     data = bytes.fromhex(raw.data)  # undo client conversion to hex/str
     img = Image.frombytes(raw.mode, raw.size, data)
-    img = np.array(img, dtype=np.float32)
-    img /= 255
+    img = np.array(img)
+    img = np.transpose(img, [2, 0, 1])
+    img = img.astype(np.float32) / 255
 
     # inference
     result['score'] = serverutils.score_image(img)
