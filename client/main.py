@@ -16,6 +16,7 @@ class UserInterface(BoxLayout):
     _quest = ObjectProperty(None)
     _image = ObjectProperty(None)
     _quest_but = ObjectProperty(None)
+    _submit_but = ObjectProperty(None)
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -42,6 +43,7 @@ class UserInterface(BoxLayout):
         self._score.text = f'Score: {result["total_score"]}'
         self._quest.text = f'Quest: {result["quest_cat"]}'
         self._quest_but.disabled = result['has_quest']
+        self._submit_but.disabled = not result['has_quest']
 
     def _get_new_quest(self) -> None:
         req = UrlRequest(
@@ -65,7 +67,7 @@ class UserInterface(BoxLayout):
                 'size': (128, 256),
                 'data': self._image.texture.pixels.hex()
             }),
-            on_success=lambda req, res: print(res)
+            on_success=self._unpack_user_data
         )
         req.wait(0)
 
