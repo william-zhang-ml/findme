@@ -54,10 +54,11 @@ async def get_new_quest() -> UserData:
     Returns:
         UserData: user data
     """
-    if USER_DATA['quest_idx'] == -1:
-        quest_idx, quest_str = serverutils.name_random()
-        USER_DATA['quest_idx'] = quest_idx
-        USER_DATA['quest_str'] = quest_str
+    if not USER_DATA.has_quest:
+        quest_idx, quest_cat = serverutils.name_random()
+        USER_DATA.has_quest = True
+        USER_DATA.quest_idx = quest_idx
+        USER_DATA.quest_cat = quest_cat
     return USER_DATA
 
 
