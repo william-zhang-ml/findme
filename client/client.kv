@@ -1,15 +1,29 @@
 <UserInterface>
     _score: score
     _quest: quest
+    _image: image
     _quest_but: quest_but
+    _submit_but: submit_but
     orientation: "vertical"
     Label:
         id: score
+        height: "48sp"
+        size_hint_y: None
     Label:
         id: quest
+        height: "48sp"
+        size_hint_y: None
+    Image:
+        id: image
     Button:
         id: quest_but
         text: "New"
-        height: "48dp"
+        height: "48sp"
         size_hint_y: None
         on_press: root._get_new_quest()
+    Button:
+        id: submit_but
+        text: "Submit"
+        height: "48sp"
+        size_hint_y: None
+        on_press: root._submit()
