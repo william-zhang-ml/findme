@@ -1,7 +1,6 @@
 """
 Dummy mobile client for testing GET and POST requests.
 """
-import json
 from typing import Any
 from kivy.app import App
 from kivy.network.urlrequest import UrlRequest
@@ -11,7 +10,8 @@ from kivy.uix.boxlayout import BoxLayout
 
 class UserInterface(BoxLayout):
     """User interface. """
-    _user_data = ObjectProperty(None)
+    _score = ObjectProperty(None)
+    _quest = ObjectProperty(None)
     _quest_but = ObjectProperty(None)
 
     def __init__(self, *args, **kwargs) -> None:
@@ -36,8 +36,9 @@ class UserInterface(BoxLayout):
             req (UrlRequest): HTTP(S) request
             result (Any): request result
         """
-        self._user_data.text = json.dumps(result)
-        self._quest_but.disabled = result['has_quest'] == 1
+        self._score.text = f'Score: {result["total_score"]}'
+        self._quest.text = f'Quest: {result["quest_cat"]}'
+        self._quest_but.disabled = result['has_quest']
 
     def _get_new_quest(
         self
