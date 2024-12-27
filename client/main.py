@@ -24,7 +24,7 @@ class UserInterface(BoxLayout):
 
     def _get_user_data(self) -> None:
         req = UrlRequest(
-            'http://localhost:8000/user/',
+            'http://127.0.0.1:8000/user/',
             on_success=self._unpack_user_data
         )
         req.wait(0)
@@ -47,7 +47,7 @@ class UserInterface(BoxLayout):
 
     def _get_new_quest(self) -> None:
         req = UrlRequest(
-            'http://localhost:8000/newquest/',
+            'http://127.0.0.1:8000/newquest/',
             on_success=self._unpack_user_data
         )
         req.wait(0)
@@ -60,7 +60,7 @@ class UserInterface(BoxLayout):
             )
         self._image.texture.flip_vertical()
         req = UrlRequest(
-            'http://localhost:8000/score/',
+            'http://127.0.0.1:8000/score/',
             req_headers={'Content-Type': 'application/json'},
             req_body=json.dumps({
                 'mode': 'RGB',
