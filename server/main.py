@@ -18,13 +18,16 @@ from . import serverutils
 app = FastAPI()
 
 
+class UserData(BaseModel):
+    """Model for user data. """
+    total_score: int = 0
+    has_quest: bool = False
+    quest_idx: int = -1
+    quest_cat: str = ''
+
+
 # Poor man's user "database"
-USER_DATA = {
-    'total_score': 0,
-    'has_quest': 0,
-    'quest_idx': -1,
-    'quest_str': ''
-}
+USER_DATA = UserData()
 
 
 class RawImage(BaseModel):
@@ -35,21 +38,21 @@ class RawImage(BaseModel):
 
 
 @app.get('/user/')
-async def get_user_data() -> Dict:
+async def get_user_data() -> UserData:
     """Get user data for mobile client display.
 
     Returns:
-        Dict: user data
+        UserData: user data
     """
     return USER_DATA
 
 
 @app.get('/newquest/')
-async def get_new_quest() -> Dict:
+async def get_new_quest() -> UserData:
     """Update user data with a new quest.
 
     Returns:
-        Dict: user data
+        UserData: user data
     """
     if USER_DATA['quest_idx'] == -1:
         quest_idx, quest_str = serverutils.name_random()
