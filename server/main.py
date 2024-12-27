@@ -20,7 +20,10 @@ app = FastAPI()
 
 # Poor man's user "database"
 USER_DATA = {
-    'total_score': 0
+    'total_score': 0,
+    'has_quest': 0,
+    'quest_idx': -1,
+    'quest_str': ''
 }
 
 
