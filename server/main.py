@@ -44,6 +44,20 @@ async def get_user_data() -> Dict:
     return USER_DATA
 
 
+@app.get('/newquest/')
+async def get_new_quest() -> Dict:
+    """Update user data with a new quest.
+
+    Returns:
+        Dict: user data
+    """
+    if USER_DATA['quest_idx'] == -1:
+        quest_idx, quest_str = serverutils.name_random()
+        USER_DATA['quest_idx'] = quest_idx
+        USER_DATA['quest_str'] = quest_str
+    return USER_DATA
+
+
 @app.post('/score/')
 async def score(raw: RawImage) -> Dict[str, int]:
     """Score an image (for plumbing checks).

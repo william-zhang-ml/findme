@@ -5,7 +5,7 @@ __author__ = 'William Zhang'
 
 from pathlib import Path
 import random
-from typing import List
+from typing import List, Tuple
 import numpy as np
 import onnxruntime as ort
 
@@ -54,15 +54,15 @@ class OnnxEngine:
 ENGINE = OnnxEngine(CURR_DIR / 'resnet18.onnx')
 
 
-def name_random() -> str:
+def name_random() -> Tuple[int, str]:
     """Name a random object category.
 
     Returns:
-        str: object category
+        Tuple[int, str]: object category ID and object category
     """
     high = len(CATEGORIES)
     idx = random.randint(0, high - 1)
-    return CATEGORIES[idx]
+    return idx, CATEGORIES[idx]
 
 
 def score_image(img: np.ndarray, label: int = 0) -> int:
