@@ -8,6 +8,6 @@ The image below shows the full interaction.
 ![overview](./media/overview.png)
 
 Skills exercised
-- Kivy (Python-based app development framework)
-- Heroku deployment (server)
+- FastAPI (server implementation)
+- Kivy (Python-based mobile app framework)
 - AI integration (CNN-based scoring)
