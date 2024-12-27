@@ -7,7 +7,7 @@ Serverside implementation.
 
 __author__ = 'William Zhang'
 
-from typing import Dict, Tuple
+from typing import Tuple
 from fastapi import FastAPI
 import numpy as np
 from PIL import Image
@@ -63,16 +63,19 @@ async def get_new_quest() -> UserData:
 
 
 @app.post('/score/')
-async def score(raw: RawImage) -> Dict[str, int]:
-    """Score an image (for plumbing checks).
+async def score_image(raw: RawImage) -> UserData:
+    """Score a user image.
 
     Args:
         raw (RawImage): hex-encoded flattened image
 
     Returns:
-        Dict[str, int]: image score
+        UserData: user data
     """
-    result = {'score': float('nan')}
+    if not USER_DATA.has_quest:
+        # do not process questless submissions,
+        # client should ideally not let you do this
+        return USER_DATA
 
     # preprocess image for inference engine
     data = bytes.fromhex(raw.data)  # undo client conversion to hex/str
@@ -82,6 +85,12 @@ async def score(raw: RawImage) -> Dict[str, int]:
     img = img.astype(np.float32) / 255
 
     # inference
-    result['score'] = serverutils.score_image(img)
+    score = serverutils.score_image(img)
 
-    return result
+    # update user data
+    USER_DATA.total_score += score
+    USER_DATA.has_quest = False
+    USER_DATA.quest_idx = -1
+    USER_DATA.quest_cat = ''
+
+    return USER_DATA
