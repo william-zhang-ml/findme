@@ -1,5 +1,12 @@
 <UserInterface>
     _user_data: user_data
+    _quest_but: quest_but
     orientation: "vertical"
     Label:
         id: user_data
+    Button:
+        id: quest_but
+        text: "New"
+        height: "48dp"
+        size_hint_y: None
+        on_press: root._get_new_quest()
